@@ -15,6 +15,11 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description'
+        'name', 'description', 'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -10,9 +10,6 @@ use App\Http\Resources\CategoryResource;
 
 class CategoryController extends BaseController
 {
-    public function test() {
-        return $this->sendResponse(['success' => 1], "Abdullah is here");
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +17,8 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $categories = Category::all();
+        $userId = auth()->user()->id;
+        $categories = Category::where('user_id', $userId)->get();
     
         return $this->sendResponse(CategoryResource::collection($categories), 'Categories retrieved successfully.');
     }
@@ -36,9 +34,9 @@ class CategoryController extends BaseController
 
         $validator = Validator::make($input, [
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'nullable'
         ]);
-   
+        $input['user_id'] = auth()->user()->id;
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
@@ -78,7 +76,7 @@ class CategoryController extends BaseController
 
         $validator = Validator::make($input, [
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'nullable'
         ]);
    
         if($validator->fails()){
@@ -86,7 +84,7 @@ class CategoryController extends BaseController
         }
    
         $category->name = $input['name'];
-        $category->description = $input['description'];
+        $category->description = $input['description'] ?? null;
         $category->save();
    
         return $this->sendResponse(new CategoryResource($category), 'Category updated successfully.');
