@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransactionController;
 
 
 /*
@@ -26,4 +27,8 @@ Route::controller(RegisterController::class)->group(function(){
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::resource('category', CategoryController::class);
+});
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::resource('transaction', TransactionController::class);
 });

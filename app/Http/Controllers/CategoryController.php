@@ -37,6 +37,7 @@ class CategoryController extends BaseController
             'description' => 'nullable'
         ]);
         $input['user_id'] = auth()->user()->id;
+        
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
