@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'user_id'
+        'user_id', 'category_id', 'amount', 'date', 'is_income'
     ];
 
     public function user()
@@ -23,8 +23,8 @@ class Category extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function transactions()
+    public function category()
     {
-        return $this->hasMany(Transactions::class);
+        return $this->belongsTo(Category::class);
     }
 }
