@@ -121,7 +121,7 @@ class TransactionController extends BaseController
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
-   
-        return $this->sendResponse([], 'Transaction deleted successfully.');
+        
+        return $this->index();
     }
 }
