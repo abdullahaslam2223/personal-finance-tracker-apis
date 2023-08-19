@@ -16,7 +16,7 @@ class TransactionController extends BaseController
     public function index()
     {
         $userId = auth()->user()->id;
-        $transactions = Transaction::where('user_id', $userId)->get();
+        $transactions = Transaction::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
     
         return $this->sendResponse(TransactionResource::collection($transactions), 'Transactions retrieved successfully.');
     }
@@ -37,6 +37,7 @@ class TransactionController extends BaseController
         $input = $request->all();
 
         $validator = Validator::make($input, [
+            'name' => 'required|string',
             'category_id' => 'required|int',
             'amount' => 'required|numeric',
             'date' => 'nullable|datetime',
@@ -83,6 +84,7 @@ class TransactionController extends BaseController
         $input = $request->all();
 
         $validator = Validator::make($input, [
+            'name' => 'nullable|string',
             'category_id' => 'nullable|int',
             'amount' => 'nullable|numeric',
             'date' => 'nullable|datetime',
@@ -93,6 +95,9 @@ class TransactionController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
         
+        if(isset($input['name'])) {
+            $transaction->name = $input['name'];
+        }
         if(isset($input['category_id'])) {
             $transaction->category_id = $input['category_id'];
         }

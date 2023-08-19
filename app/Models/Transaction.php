@@ -15,7 +15,7 @@ class Transaction extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'category_id', 'amount', 'date', 'is_income'
+        'name', 'user_id', 'category_id', 'amount', 'date', 'is_income'
     ];
 
     public function user()
