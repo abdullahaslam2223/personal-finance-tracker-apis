@@ -34,7 +34,8 @@ class CategoryController extends BaseController
 
         $validator = Validator::make($input, [
             'name' => 'required',
-            'description' => 'nullable'
+            'description' => 'nullable|string',
+            'budget' => 'nullable|numeric'
         ]);
         $input['user_id'] = auth()->user()->id;
         
@@ -77,7 +78,8 @@ class CategoryController extends BaseController
 
         $validator = Validator::make($input, [
             'name' => 'required',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'budget' => 'nullable|numeric'
         ]);
    
         if($validator->fails()){

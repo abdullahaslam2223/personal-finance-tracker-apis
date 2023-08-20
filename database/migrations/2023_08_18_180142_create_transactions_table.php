@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
-            $table->string('amount');
+            $table->decimal('amount', 10, 2);
             $table->dateTime('date')->useCurrent();
             $table->boolean('is_income')->default(0);
             $table->timestamps();

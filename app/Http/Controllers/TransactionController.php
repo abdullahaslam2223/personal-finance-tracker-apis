@@ -17,7 +17,6 @@ class TransactionController extends BaseController
     {
         $userId = auth()->user()->id;
         $transactions = Transaction::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
-    
         return $this->sendResponse(TransactionResource::collection($transactions), 'Transactions retrieved successfully.');
     }
 
