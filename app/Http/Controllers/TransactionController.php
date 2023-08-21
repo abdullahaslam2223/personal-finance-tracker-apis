@@ -43,6 +43,9 @@ class TransactionController extends BaseController
             'is_income' => 'nullable|boolean'
         ]);
         $input['user_id'] = auth()->user()->id;
+        if(!isset($input['date'])) {
+            $input['date'] = date('Y-m-d H:i:s'); 
+        }
 
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
