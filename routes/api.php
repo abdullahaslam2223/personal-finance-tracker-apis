@@ -31,3 +31,5 @@ Route::middleware('auth:sanctum')->group( function () {
 Route::middleware('auth:sanctum')->group( function () {
     Route::resource('transaction', TransactionController::class);
 });
+
+Route::middleware('auth:sanctum')->get('chart-transactions', [TransactionController::class, 'getChartTransactions']);

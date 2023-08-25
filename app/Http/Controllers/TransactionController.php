@@ -7,6 +7,7 @@ use App\Http\Controllers\BaseController as BaseController;
 use App\Models\Transaction;
 use App\Http\Resources\TransactionResource;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends BaseController
 {
@@ -125,5 +126,30 @@ class TransactionController extends BaseController
         $transaction->delete();
         
         return $this->index();
+    }
+
+    public function getChartTransactions(Request $request) {
+        $input = $request->all();
+        $start_date = $input['start_date'] ?? null;
+        $end_date = $input['end_date'] ?? null;
+        
+        $user_id = auth()->user()->id;
+
+        $query = DB::table('transactions')->where('user_id', $user_id)->where('is_income', 0)
+                ->select([\DB::raw('date(date) as date'), \DB::raw('CAST(sum(amount) AS SIGNED INTEGER) as expense')]);
+
+        if($start_date) {
+            $query->whereRaw('date(date) >= ?', [$start_date]);
+        }
+
+        if($end_date) {
+            $query->whereRaw('date(date) <= ?', $end_date);
+        }
+
+        $query->groupBy(\DB::raw('date(date)'));
+
+        $chart_transactions = $query->get();
+
+        return ['data' => $chart_transactions];
     }
 }

@@ -18,6 +18,10 @@ class Transaction extends Model
         'name', 'user_id', 'category_id', 'amount', 'date', 'is_income'
     ];
 
+    protected $casts = [
+        'amount' => 'integer', // Cast the 'price' column to an integer.
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
