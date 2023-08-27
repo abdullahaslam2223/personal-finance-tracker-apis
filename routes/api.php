@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\BudgetController;
 
 
 /*
@@ -33,3 +34,5 @@ Route::middleware('auth:sanctum')->group( function () {
 });
 
 Route::middleware('auth:sanctum')->get('chart-transactions', [TransactionController::class, 'getChartTransactions']);
+
+Route::middleware('auth:sanctum')->get('budget', [BudgetController::class, 'getBudget']);
