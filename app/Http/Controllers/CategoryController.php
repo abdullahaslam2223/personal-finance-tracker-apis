@@ -18,7 +18,7 @@ class CategoryController extends BaseController
     public function index()
     {
         $userId = auth()->user()->id;
-        $categories = Category::where('user_id', $userId)->get();
+        $categories = Category::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
     
         return $this->sendResponse(CategoryResource::collection($categories), 'Categories retrieved successfully.');
     }
